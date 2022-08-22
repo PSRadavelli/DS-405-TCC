@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { User } from './user.entity';
 
 
 @Module({
@@ -14,7 +15,7 @@ import { DataSource } from 'typeorm';
       username: 'root',
       password: 'root',
       database: '',
-      entities: [],
+      entities: [User],
     })
   ],
   controllers: [AppController],

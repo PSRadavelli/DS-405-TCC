@@ -3,17 +3,9 @@ import { DataTypeDefaults } from 'typeorm/driver/types/DataTypeDefaults';
 
 @Entity()
 
-export class Package{
+export class Door{
     @PrimaryGeneratedColumn()
     @Column()
-    usuarioId: Int16Array;
-
-    @Column()
-    status: Int16Array;
-
-    @Column()
-    receivementDate: DataTypeDefaults;
-
-    @Column()
-    takeOffDate: DataTypeDefaults;
+    packageId: Int16Array;
+    size: CharacterData;
 }

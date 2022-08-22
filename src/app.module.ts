@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { User } from './user.entity';
 import { Package } from './package.entity';
+import { Door } from './door.entity';
 
 
 @Module({
@@ -16,7 +17,7 @@ import { Package } from './package.entity';
       username: 'root',
       password: 'root',
       database: '',
-      entities: [User, Package],
+      entities: [User, Package, Door],
     })
   ],
   controllers: [AppController],

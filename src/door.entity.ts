@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { DataTypeDefaults } from 'typeorm/driver/types/DataTypeDefaults';
 
 @Entity()
 

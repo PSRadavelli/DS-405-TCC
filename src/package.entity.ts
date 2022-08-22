@@ -3,7 +3,7 @@ import { DataTypeDefaults } from 'typeorm/driver/types/DataTypeDefaults';
 
 @Entity()
 
-export class Door{
+export class Package{
 
     @Column()
     usuarioId: Int16Array;

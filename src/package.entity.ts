@@ -4,7 +4,7 @@ import { DataTypeDefaults } from 'typeorm/driver/types/DataTypeDefaults';
 @Entity()
 
 export class Package{
-
+    @PrimaryGeneratedColumn()
     @Column()
     usuarioId: Int16Array;
 

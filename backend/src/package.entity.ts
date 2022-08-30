@@ -1,19 +1,20 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { DataTypeDefaults } from 'typeorm/driver/types/DataTypeDefaults';
 
 @Entity()
+export class Package {
+  @PrimaryGeneratedColumn()
+  @Column({type: 'int', primary: true, nullable: false,})
+  id: number;
+  
+  @Column({ type: 'int', nullable: false })
+  userId: number;
 
-export class Package{
-    @PrimaryGeneratedColumn()
-    @Column()
-    usuarioId: Int16Array;
+  @Column({ type: 'varchar', length: 10, nullable: false })
+  status: string;
 
-    @Column()
-    status: Int16Array;
+  @Column({ type: 'date', nullable: false })
+  receivementDate: string;
 
-    @Column()
-    receivementDate: DataTypeDefaults;
-
-    @Column()
-    takeOffDate: DataTypeDefaults;
+  @Column({ type: 'date', nullable: false })
+  takeOffDate: string;
 }

@@ -5,7 +5,7 @@ export class Package {
   @PrimaryGeneratedColumn()
   @Column({ type: 'int' })
   id: number;
-  
+
   @Column({ type: 'int', nullable: false })
   userId: number;
 

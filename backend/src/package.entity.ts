@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Package {
   @PrimaryGeneratedColumn()
-  @Column({type: 'int', primary: true, nullable: false,})
+  @Column({ type: 'int' })
   id: number;
   
   @Column({ type: 'int', nullable: false })

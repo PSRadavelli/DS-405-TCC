@@ -1,34 +1,34 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-    export class User{
-        @PrimaryGeneratedColumn()
-        id: number;
+export class User {
+  @PrimaryGeneratedColumn({ type: 'int' })
+  tag: number;
 
-        @Column()
-        name: string;
+  @Column({ type: 'varchar', length: 50, nullable: false })
+  name: string;
 
-        @Column()
-        lastName: string;
-       
-        @Column()
-        age: Int16Array;
+  @Column({ type: 'varchar', length: 50, nullable: false })
+  lastName: string;
 
-        @Column()
-        telephone: Int16Array;
-        
-        @Column()
-        email: string;
+  @Column({ type: 'int', nullable: false })
+  age: number;
 
-        @Column({default: false})
-        admin: boolean;
+  @Column({ type: 'varchar', length: 11 })
+  telephone: number;
 
-        @Column()
-        appNotification: boolean;
+  @Column({ type: 'varchar', length: 50 })
+  email: string;
 
-        @Column()
-        emailNotification: boolean;
-        
-        @Column()
-        intercomNotification: boolean;
-    }
+  @Column({ type: 'boolean', default: false, nullable: false })
+  admin: boolean;
+
+  @Column({ nullable: false })
+  appNotification: boolean;
+
+  @Column({ nullable: false })
+  emailNotification: boolean;
+
+  @Column({ nullable: false })
+  intercomNotification: boolean;
+}

@@ -1,10 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
+export class Door {
+  @PrimaryGeneratedColumn()
+  @Column({ type: 'int', nullable: false, unique: true, primary: true })
+  packageNumber: number;
 
-export class Door{
-    @PrimaryGeneratedColumn()
-    @Column()
-    packageId: Int16Array;
-    size: CharacterData;
+  @Column({ type: 'int', unique: true, nullable: false })
+  packageId: number;
+
+  @Column({ type: 'varchar', nullable: false })
+  size: number;
 }

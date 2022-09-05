@@ -3,10 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { User } from './user.entity';
-import { Package } from './package.entity';
-import { Door } from './door.entity';
-
+import { User } from './users/user.entity';
+import { Package } from './packages/package.entity';
+import { Door } from './doors/door.entity';
 
 @Module({
   imports: [
@@ -15,15 +14,15 @@ import { Door } from './door.entity';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'root',
-      database: '',
+      password: 'Autoboxpasswd123#',
+      database: 'autobox',
       entities: [User, Package, Door],
-    })
+      synchronize: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-
 export class AppModule {
   constructor(private dataSource: DataSource) {}
 }

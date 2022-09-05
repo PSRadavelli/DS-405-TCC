@@ -2,8 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Package {
-  @PrimaryGeneratedColumn()
-  @Column({ type: 'int' })
+  @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
 
   @Column({ type: 'int', nullable: false })

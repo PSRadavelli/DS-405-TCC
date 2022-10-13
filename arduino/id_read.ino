@@ -1,86 +1,55 @@
-#include <SoftwareSerial.h>
+#include <SPI.h>
+#include <MFRC522.h>
 
-const int BUFFER_SIZE = 14;
-const int DATA_SIZE = 10;
-const int DATA_VERSION_SIZE = 2;
-const int DATA_TAG_SIZE = 8;
-const int CHECKSUM_SIZE = 2;
+#define RST_PIN         22
+#define SS_PIN          5
+#define RELAY_PORT      27
 
-SoftwareSerial ssrfid = SoftwareSerial(6,8);
-
-uint8_t buffer[BUFFER_SIZE];
-int buffer_index = 0;
+MFRC522 mfrc522(SS_PIN, RST_PIN);
 
 void setup() {
- Serial.begin(9600); 
- 
- ssrfid.begin(9600);
- ssrfid.listen(); 
- 
- Serial.println("INICIALIZACAO CONCLUIDA");
+  Serial.begin(115200);
+  SPI.begin();
+
+  mfrc522.PCD_Init();
+  mfrc522.PCD_DumpVersionToSerial();
+
+  Serial.println("Aproxime a tag...");
+
+  pinMode(RELAY_PORT, OUTPUT);
+  digitalWrite(RELAY_PORT, LOW);
 }
 
 void loop() {
-  if (ssrfid.available() > 0) {
-    bool call_extract_tag = false;
-    
-    int ssvalue = ssrfid.read();
-    if (ssvalue == -1) {
-      return;
-    }
+  if ( ! mfrc522.PICC_IsNewCardPresent()) {
+    return;
+  }
 
-    if (ssvalue == 2) {
-      buffer_index = 0;
-    } else if (ssvalue == 3) {     
-      call_extract_tag = true;
-    }
+  if ( ! mfrc522.PICC_ReadCardSerial()) {
+    return;
+  }
 
-    if (buffer_index >= BUFFER_SIZE) {
-      Serial.println("Error: Buffer overflow detected! ");
-      return;
-    }
-    
-    buffer[buffer_index++] = ssvalue;
+  Serial.print("UID da tag :");
+  String conteudo = "";
+  byte letra;
+  for (byte i = 0; i < mfrc522.uid.size; i++)
+  {
+    Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
+    Serial.print(mfrc522.uid.uidByte[i], HEX);
+    conteudo.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
+    conteudo.concat(String(mfrc522.uid.uidByte[i], HEX));
+  }
+  Serial.println();
+  conteudo.toUpperCase();
 
-    if (call_extract_tag == true) {
-      if (buffer_index == BUFFER_SIZE) {
-        unsigned tag = extract_tag();
-      } else {
-        buffer_index = 0;
-        return;
-      }
-    }    
-  }    
-}
-
-unsigned extract_tag() {
-    uint8_t *msg_data = buffer + 1;
-    uint8_t *msg_data_tag = msg_data + 2;
-
-    long tag = hexstr_to_value(msg_data_tag, DATA_TAG_SIZE);
-
-    Serial.println("");
-    Serial.print("ID do usuario: ");
-    Serial.println(tag);
-
-    long checksum = 0;
-    for (int i = 0; i < DATA_SIZE; i+= CHECKSUM_SIZE) {
-      long val = hexstr_to_value(msg_data + i, CHECKSUM_SIZE);
-      checksum ^= val;
-    }
-
-    Serial.println("");
-    Serial.println("--------");
-
-    return tag;
-}
-
-long hexstr_to_value(char *str, unsigned int length) {
-  char* copy = malloc((sizeof(char) * length) + 1); 
-  memcpy(copy, str, sizeof(char) * length);
-  copy[length] = '\0'; 
-
-  long value = strtol(copy, NULL, 16);
-  free(copy);
-  return value;
+  if (conteudo.substring(1) == "FB 91 47 53")
+  {
+    Serial.println("AUTORIZADO !");
+    Serial.println();
+    digitalWrite(RELAY_PORT, HIGH); // ativa rele, abre a trava solenoide
+    delay(3000);           // espera 3 segundos
+    digitalWrite(RELAY_PORT, LOW);  // desativa rele, fecha a trava solenoide
+  } else {
+    delay(3000);
+  }
 }

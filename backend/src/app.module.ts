@@ -2,27 +2,25 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
-import { User } from './users/user.entity';
-import { Package } from './packages/package.entity';
-import { Door } from './doors/door.entity';
-
+import { join } from 'path';
+import { DoorModule } from './doors/doors.module';
+import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'bjxf6affweanqsfftcun-mysql.services.clever-cloud.com',
       port: 3306,
-      username: 'root',
-      password: 'Autoboxpasswd123#',
-      database: 'autobox',
-      entities: [User, Package, Door],
+      username: 'upifprdylotsl8fz',
+      password: 'BrFVbqHBcCJSVRuiqcTQ',
+      database: 'bjxf6affweanqsfftcun',
+      entities: [join(__dirname, '**', '*.entity.{ts,js}')],
       synchronize: true,
     }),
+    DoorModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  constructor(private dataSource: DataSource) {}
-}
+export class AppModule {}

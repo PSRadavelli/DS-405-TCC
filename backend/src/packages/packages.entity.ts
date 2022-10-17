@@ -8,7 +8,7 @@ export class Package {
   @Column({ type: 'int', nullable: false })
   userId: number;
 
-  @Column({ type: 'varchar', length: 10, nullable: false })
+  @Column({ type: 'varchar', length: 10 })
   status: string;
 
   @Column({ type: 'date', nullable: false })

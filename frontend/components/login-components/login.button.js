@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, Pressable } from 'react-native';
 
-export default function LoginButton(props) {
+export function LoginButton(props) {
     const { onPress, title } = props;
     return(
         <Pressable style={styles.button}>
@@ -29,3 +29,5 @@ const styles = StyleSheet.create({
         color: 'white',
     }
 })
+
+export default LoginButton;

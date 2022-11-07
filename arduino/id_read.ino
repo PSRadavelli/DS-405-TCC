@@ -3,12 +3,13 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
+#include <UrlEncode.h>
 
 #define RST_PIN         22
 #define SS_PIN          5
 #define RELAY_PORT      27
 
-const char* ssid = "Vinicius 2.4GHz";
+const char* ssid = "Redmi Note";
 const char* password = "vibrafone";
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
@@ -71,7 +72,11 @@ void checaTag(String conteudoTag) {
 
     String tagUID = conteudoTag.substring(1);
 
-    client.begin("https://tcc-cotuca-backend.viniciusgranado.repl.co/users/" + tagUID);
+    String encodedTag = urlEncode(tagUID);
+
+    Serial.println(encodedTag);
+
+    client.begin("https://TCC-COTUCA-BACKEND.viniciusgranado.repl.co/users/tag/" + encodedTag);
 
     int httpCode = client.GET();
 

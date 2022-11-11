@@ -10,9 +10,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(body: LoginButton()),
-    );
+    return MaterialApp(
+        title: 'AutoBox',
+        home: Scaffold(
+          body: ListView(children: [
+            Center(
+              heightFactor: 5.5,
+              child: Image.asset('assets/images/logo-vertical.png'),
+            ),
+          ]),
+        ));
   }
 }

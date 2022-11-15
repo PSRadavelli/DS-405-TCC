@@ -5,23 +5,39 @@
 #include <ArduinoJson.h>
 #include <UrlEncode.h>
 
-#define RST_PIN         22
-#define SS_PIN          5
-#define RELAY_PORT      27
+#define RST_PIN 22
+#define SS_PIN 5
 
-const char* ssid = "Redmi Note";
-const char* password = "vibrafone";
+const char *ssid = "Vinicius 2.4GHz";
+const char *password = "vibrafone";
+
+struct Door
+{
+  int number;
+  int id;
+  int port;
+};
+
+Door door01 = {1, 1, 27};
+Door door02 = {2, 2, 26};
+Door door03 = {3, 3, 25};
+
+Door doors[3] = {door01, door02, door03};
+int ports[3] = {27, 26, 25};
+int doorsArrayLength = 3;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
 
   WiFi.begin(ssid, password);
 
   Serial.print("Conectando ao WiFi");
 
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     Serial.print(".");
     delay(500);
   }
@@ -37,16 +53,21 @@ void setup() {
 
   Serial.println("\nAproxime a tag...");
 
-  pinMode(RELAY_PORT, OUTPUT);
-  digitalWrite(RELAY_PORT, HIGH);
+  for (int port : ports) {
+    pinMode(port, OUTPUT);
+    digitalWrite(port, HIGH);
+  }
 }
 
-void loop() {
-  if ( ! mfrc522.PICC_IsNewCardPresent()) {
+void loop()
+{
+  if (!mfrc522.PICC_IsNewCardPresent())
+  {
     return;
   }
 
-  if ( ! mfrc522.PICC_ReadCardSerial()) {
+  if (!mfrc522.PICC_ReadCardSerial())
+  {
     return;
   }
 
@@ -66,21 +87,22 @@ void loop() {
   checaTag(conteudo);
 }
 
-void checaTag(String conteudoTag) {
-  if (WiFi.status() == WL_CONNECTED) {
+void checaTag(String conteudoTag)
+{
+  if (WiFi.status() == WL_CONNECTED)
+  {
     HTTPClient client;
 
     String tagUID = conteudoTag.substring(1);
 
     String encodedTag = urlEncode(tagUID);
 
-    Serial.println(encodedTag);
-
     client.begin("https://TCC-COTUCA-BACKEND.viniciusgranado.repl.co/users/tag/" + encodedTag);
 
     int httpCode = client.GET();
 
-    if (httpCode > 0) {
+    if (httpCode > 0)
+    {
       String payload = client.getString();
       Serial.println("\nStatus code: " + String(httpCode));
       Serial.println(payload);
@@ -92,42 +114,73 @@ void checaTag(String conteudoTag) {
       payload.trim();
       payload.toCharArray(json, 500);
 
-      Serial.println(payload);
-
       StaticJsonDocument<200> doc;
       DeserializationError err = deserializeJson(doc, json);
 
-      if (err) {
-        Serial.println("Error");
-      } else {
-        Serial.println("Success");
-      }
-
       JsonObject obj = doc.as<JsonObject>();
 
-      if (obj.containsKey("id")) {
-        Serial.println("Contains");
-      } else {
-        Serial.println("Not contains");
-      }
-
-      int id = doc["id"];
-      int packageId = doc["packageId"];
-      const char* pkgSize = doc["size"];
-      int doorNumber = doc["doorNumber"];
-
-      Serial.println("--------------------------");
-      Serial.println(String(id));
-      Serial.println(String(packageId));
-      Serial.println(String(pkgSize));
-      Serial.println(String(doorNumber));
-      Serial.println("--------------------------");
+      // int userId = doc["userId"];
+      // const char *userTag = doc["userTag"];
+      boolean hasPackage = doc["hasPackage"];
+      int packageDoors[3] = {doc["packageDoors"][0], doc["packageDoors"][1], doc["packageDoors"][2]};
 
       client.end();
-    } else {
+
+      if (hasPackage) {
+        abrePortas(packageDoors);
+      }
+    }
+    else
+    {
       Serial.println("Erro na requisição HTTP");
     }
-  } else {
+  }
+  else
+  {
     Serial.println("Conexao perdida");
   }
+}
+
+void abrePortas(int portas[])
+{
+  int arrayLength = getIntArrayLength(portas);
+  int doorsPorts[arrayLength];
+
+  for (int i = 0; i < arrayLength; i++) {
+    int doorId = portas[i];
+
+    doorsPorts[i] = getDoorPortById(doorId);
+
+    if (doorsPorts[i] != -1) openDoor(doorsPorts[i]);
+  }
+
+  delay(3000);
+
+  for (int i = 0; i < arrayLength; i++) {
+    if (doorsPorts[i] != -1) {
+      closeDoor(doorsPorts[i]);
+    }
+  }
+}
+
+void openDoor(int doorPort) {
+  digitalWrite(doorPort, LOW);
+}
+
+void closeDoor(int doorPort) {
+  digitalWrite(doorPort, HIGH);
+}
+
+int getDoorPortById(int doorId) {
+  for (int i = 0; i < doorsArrayLength; i++) {
+    if (doors[i].id == doorId) {
+      return doors[i].port;
+    }
+  }
+
+  return -1;
+}
+
+int getIntArrayLength(int arr[]) {
+  return sizeof(arr) / sizeof(int);
 }

@@ -53,7 +53,8 @@ void setup()
 
   Serial.println("\nAproxime a tag...");
 
-  for (int port : ports) {
+  for (int port : ports)
+  {
     pinMode(port, OUTPUT);
     digitalWrite(port, HIGH);
   }
@@ -126,7 +127,8 @@ void checaTag(String conteudoTag)
 
       client.end();
 
-      if (hasPackage) {
+      if (hasPackage)
+      {
         abrePortas(packageDoors);
       }
     }
@@ -146,34 +148,76 @@ void abrePortas(int portas[])
   int arrayLength = getIntArrayLength(portas);
   int doorsPorts[arrayLength];
 
-  for (int i = 0; i < arrayLength; i++) {
+  for (int i = 0; i < arrayLength; i++)
+  {
     int doorId = portas[i];
 
     doorsPorts[i] = getDoorPortById(doorId);
 
-    if (doorsPorts[i] != -1) openDoor(doorsPorts[i]);
+    if (doorsPorts[i] != -1)
+      openDoor(doorsPorts[i]);
   }
 
   delay(3000);
 
-  for (int i = 0; i < arrayLength; i++) {
-    if (doorsPorts[i] != -1) {
+  for (int i = 0; i < arrayLength; i++)
+  {
+    if (doorsPorts[i] != -1)
+    {
       closeDoor(doorsPorts[i]);
     }
   }
+
+  for (int i = 0; i < arrayLength; i++)
+  {
+    retrievePackage(portas[i]);
+  }
 }
 
-void openDoor(int doorPort) {
+void retrievePackage(int doorId)
+{
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    HTTPClient client;
+
+    client.begin("https://TCC-COTUCA-BACKEND.viniciusgranado.repl.co/packages/retrieve" + doorId);
+
+    int httpCode = client.GET();
+
+    if (httpCode > 0)
+    {
+      String payload = client.getString();
+      Serial.println("\nStatus code: " + String(httpCode));
+
+      client.end();
+    }
+    else
+    {
+      Serial.println("Erro na requisição HTTP");
+    }
+  }
+  else
+  {
+    Serial.println("Conexao perdida");
+  }
+}
+
+void openDoor(int doorPort)
+{
   digitalWrite(doorPort, LOW);
 }
 
-void closeDoor(int doorPort) {
+void closeDoor(int doorPort)
+{
   digitalWrite(doorPort, HIGH);
 }
 
-int getDoorPortById(int doorId) {
-  for (int i = 0; i < doorsArrayLength; i++) {
-    if (doors[i].id == doorId) {
+int getDoorPortById(int doorId)
+{
+  for (int i = 0; i < doorsArrayLength; i++)
+  {
+    if (doors[i].id == doorId)
+    {
       return doors[i].port;
     }
   }
@@ -181,6 +225,7 @@ int getDoorPortById(int doorId) {
   return -1;
 }
 
-int getIntArrayLength(int arr[]) {
+int getIntArrayLength(int arr[])
+{
   return sizeof(arr) / sizeof(int);
 }

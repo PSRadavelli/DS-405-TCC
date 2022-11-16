@@ -8,4 +8,5 @@ export interface UserModel {
   appNotification: boolean;
   emailNotification: boolean;
   intercomNotification: boolean;
+  tagId: string;
 }

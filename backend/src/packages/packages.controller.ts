@@ -42,4 +42,11 @@ export class PackagesController {
   ): PackagesModel {
     return this.packagesService.update(id, packg);
   }
+
+  @Put('retrieve/:doorId')
+  public updateStatus(
+    @Param('doorId', ParseIntPipe) doorId: number,
+  ) {
+    return this.packagesService.updatePackageStatusByDoorId(doorId);
+  }
 }

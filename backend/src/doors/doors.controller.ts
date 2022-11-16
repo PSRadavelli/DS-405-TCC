@@ -11,7 +11,7 @@ import {
 import { DoorModel } from './doors.interface';
 import { DoorsService } from './doors.service';
 
-@Controller('door')
+@Controller('doors')
 export class DoorController {
   constructor(private readonly doorsService: DoorsService) {}
 

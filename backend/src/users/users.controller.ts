@@ -8,6 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { TagRequestAnswer } from 'src/models/models';
 import { UserModel } from './users.interface';
 import { UsersService } from './users.service';
 
@@ -23,6 +24,11 @@ export class UsersController {
   @Get(':id')
   public findOne(@Param('id', ParseIntPipe) id: number): UserModel {
     return this.usersService.findOne(id);
+  }
+
+  @Get('/tag/:tagId')
+  public async find(@Param('tagId') tagId: string): Promise<TagRequestAnswer> {
+    return await this.usersService.findOneByTag(tagId);
   }
 
   @Post()

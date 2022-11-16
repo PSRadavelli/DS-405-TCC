@@ -10,11 +10,11 @@ import { PackagesModule } from './packages/packages.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'bupi2skdqak3hefpxtow-mysql.services.clever-cloud.com',
+      host: 'bcgbxjt5egdi7btdi00h-mysql.services.clever-cloud.com',
       port: 3306,
-      username: 'uhid1kcv2z4ajrvx',
-      password: 'Tw8D3gUuZu8fTZZflUfU',
-      database: 'bupi2skdqak3hefpxtow',
+      username: 'uc3umelmy8unxg25',
+      password: '5rhNGtreHDDdWa3yhevM',
+      database: 'bcgbxjt5egdi7btdi00h',
       entities: [join(__dirname, '**', '*.entity.{ts,js}')],
       synchronize: true,
     }),

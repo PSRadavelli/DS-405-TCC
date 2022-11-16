@@ -1,12 +1,29 @@
 import {
+  Inject,
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import { Door } from 'src/doors/doors.entity';
+import { TagRequestAnswer } from 'src/models/models';
+import { Package } from 'src/packages/packages.entity';
+import { Repository, EntityManager } from 'typeorm';
+import { User } from './users.entity';
 import { UserModel } from './users.interface';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @Inject('USERS_REPOSITORY')
+    private usersRepository: Repository<User>,
+
+    @Inject('PACKAGES_REPOSITORY')
+    private packagesRepository: Repository<Package>,
+    
+    @Inject('DOORS_REPOSITORY')
+    private doorsRepository: Repository<Door>,
+  ) {}
+
   private users: Array<UserModel> = [];
   public findAll(): Array<UserModel> {
     return this.users;
@@ -19,6 +36,48 @@ export class UsersService {
       throw new NotFoundException('User not found.');
     }
     return user;
+  }
+
+  public async findOneByTag(tagId: string): Promise<TagRequestAnswer> {
+    const user = await this.usersRepository
+      .createQueryBuilder('user')
+      .where("user.tagId = :id", { id: tagId })
+      .printSql()
+      .getOne();
+      
+    if (!user) {
+      throw new NotFoundException('User tag not found.');
+    }
+
+    const response: TagRequestAnswer = {
+      userId: user.userId,
+      userTag: user.tagId,
+      hasPackage: false,
+    };
+
+    const packages = await this.packagesRepository
+      .createQueryBuilder('package')
+      .where('package.userId = :userId', { userId: user.userId })
+      .andWhere('package.retrieved = :retrievedStatus', {retrievedStatus: false})
+      .printSql()
+      .getMany();
+
+    if (packages.length === 0) {
+      return response;
+    };
+
+    const doors = await this.doorsRepository
+      .createQueryBuilder('door')
+      .where('door.packageId IN (:packageId)', { packageId: packages.map((p) => p.id) })
+      .printSql()
+      .getMany();
+
+    const doorsIDs = doors.map((door) => Number(door.id));
+
+    response.hasPackage = true;
+    response.packageDoors = doorsIDs;
+
+    return response;
   }
 
   public create(user: UserModel) {

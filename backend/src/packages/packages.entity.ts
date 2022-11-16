@@ -8,12 +8,12 @@ export class Package {
   @Column({ type: 'int', nullable: false })
   userId: number;
 
-  @Column({ type: 'varchar', length: 10 })
-  status: string;
+  @Column({ type: 'bool' })
+  retrieved: boolean;
 
   @Column({ type: 'date', nullable: false })
   receivementDate: string;
 
-  @Column({ type: 'date', nullable: false })
-  takeOffDate: string;
+  @Column({ type: 'date', nullable: true })
+  retrievalDate: string;
 }

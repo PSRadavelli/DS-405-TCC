@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, TextInput, Image, Button, Alert} from 'react-native';
+import React from 'react'
+import { Text, View } from 'react-native'
 
-
-export default function RegisterPage(){
-    return(
-        <View>
-            <Text >
-                IASJDRIOJASDJNIOASJDISAO
-            </Text>
-        </View>
-    )
+export default function RegisterPage () {
+  return (
+    <View>
+        <Text >
+            REGISTER
+        </Text>
+    </View>
+  )
 }

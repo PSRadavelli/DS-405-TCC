@@ -25,6 +25,7 @@ Door door03 = {3, 3, 25};
 Door doors[3] = {door01, door02, door03};
 int ports[3] = {27, 26, 25};
 int doorsArrayLength = 3;
+int requestDoorDelay = 0;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
@@ -62,6 +63,14 @@ void setup()
 
 void loop()
 {
+  if (requestDoorDelay == 150)
+  {
+    checaRequisicaoPorta();
+    requestDoorDelay = 0;
+  } else {
+    requestDoorDelay += 1;
+  }
+
   if (!mfrc522.PICC_IsNewCardPresent())
   {
     return;
@@ -130,6 +139,58 @@ void checaTag(String conteudoTag)
       if (hasPackage)
       {
         abrePortas(packageDoors);
+      }
+    }
+    else
+    {
+      Serial.println("Erro na requisição HTTP");
+      client.end();
+    }
+  }
+  else
+  {
+    Serial.println("Conexao perdida");
+  }
+}
+
+void checaRequisicaoPorta()
+{
+    if (WiFi.status() == WL_CONNECTED)
+  {
+    HTTPClient client;
+
+    client.begin("https://tcc-cotuca-backend.viniciusgranado.repl.co/doorRequest");
+
+    int httpCode = client.GET();
+
+    if (httpCode > 0)
+    {
+      String payload = client.getString();
+      Serial.println("\nStatus code: " + String(httpCode));
+      Serial.println(payload);
+
+      char json[500];
+
+      payload.replace(" ", "");
+      payload.replace("\n", "");
+      payload.trim();
+      payload.toCharArray(json, 500);
+
+      StaticJsonDocument<200> doc;
+      DeserializationError err = deserializeJson(doc, json);
+
+      JsonObject obj = doc.as<JsonObject>();
+
+      int id = doc[0]["id"];
+      int doorId = doc[0]["doorId"];
+      int doorNumber = doc[0]["doorNumber"];
+
+      client.end();
+
+      if (doorId)
+      {
+        int porta[] = {doorId};
+        abrePortas(porta);
       }
     }
     else

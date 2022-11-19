@@ -72,7 +72,7 @@ void loop()
     return;
   }
 
-  Serial.print("UID da tag :");
+  Serial.print("\nUID da tag :");
   String conteudo = "";
   byte letra;
   for (byte i = 0; i < mfrc522.uid.size; i++)
@@ -135,6 +135,7 @@ void checaTag(String conteudoTag)
     else
     {
       Serial.println("Erro na requisição HTTP");
+      client.end();
     }
   }
   else
@@ -166,39 +167,6 @@ void abrePortas(int portas[])
     {
       closeDoor(doorsPorts[i]);
     }
-  }
-
-  for (int i = 0; i < arrayLength; i++)
-  {
-    retrievePackage(portas[i]);
-  }
-}
-
-void retrievePackage(int doorId)
-{
-  if (WiFi.status() == WL_CONNECTED)
-  {
-    HTTPClient client;
-
-    client.begin("https://TCC-COTUCA-BACKEND.viniciusgranado.repl.co/packages/retrieve" + doorId);
-
-    int httpCode = client.GET();
-
-    if (httpCode > 0)
-    {
-      String payload = client.getString();
-      Serial.println("\nStatus code: " + String(httpCode));
-
-      client.end();
-    }
-    else
-    {
-      Serial.println("Erro na requisição HTTP");
-    }
-  }
-  else
-  {
-    Serial.println("Conexao perdida");
   }
 }
 

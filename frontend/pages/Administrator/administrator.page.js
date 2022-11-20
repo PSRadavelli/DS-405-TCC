@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Button } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
-import { useGetAllUsersHook } from '../hooks/useGetAllUsersHook'
+import { useGetAllUsersHook } from '../../hooks/useGetAllUsersHook'
+import { BaseView } from '../../components/BaseView/BaseView'
+import { CustomButton } from '../../components/CustomButton/CustomButton'
+import { InputLabel } from '../../components/InputLabel/InputLabel'
 
 const styles = StyleSheet.create({
   input: {
-    borderRadius: 3,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    width: '100%'
+    backgroundColor: 'white',
+    marginTop: 10,
+    marginBottom: 10
   }
 })
 
@@ -21,12 +22,15 @@ export const AdministratorPage = () => {
   })
 
   if (isUsersLoading) {
-    return 'LOADING'
+    return <Text>LOADING</Text>
   }
 
   return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+    <BaseView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ padding: 20 }}>
+        <InputLabel>Usuário</InputLabel>
         <Picker
+          style={{ ...styles.input, marginBottom: 20 }}
           selectedValue={doorRequestDto.userId}
           onValueChange={(itemValue) =>
             setDoorRequestDto((prev) => ({
@@ -39,7 +43,9 @@ export const AdministratorPage = () => {
           })}
         </Picker>
 
+        <InputLabel>Tamanho da porta</InputLabel>
         <Picker
+          style={{ ...styles.input, marginBottom: 20 }}
           selectedValue={doorRequestDto.doorSize}
           onValueChange={(itemValue) =>
             setDoorRequestDto((prev) => ({
@@ -51,10 +57,12 @@ export const AdministratorPage = () => {
           <Picker.Item label="Pequena" value="PEQUENA" />
         </Picker>
 
-        <Button
+        <CustomButton
           title="Salvar"
           onPress={() => {}}
+          style={{ width: '50%', marginLeft: 'auto', marginRight: 'auto' }}
         />
       </View>
+    </BaseView>
   )
 }

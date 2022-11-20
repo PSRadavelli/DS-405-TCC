@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function LoginPage({ navigation }) {
+export default function LoginPage ({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <StatusBar/>
       <TextInput
           style={styles.input}
-          placeholder='Login' 
+          placeholder='Login'
       />
       <TextInput
           style={styles.input}

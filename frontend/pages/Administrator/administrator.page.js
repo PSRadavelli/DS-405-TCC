@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, Text, ActivityIndicator, Modal, Pressable } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { useGetAllUsersHook } from '../../hooks/useGetAllUsersHook'
 import { useRequestNewDoorHook } from '../../hooks/useRequestNewDoorHook'
@@ -8,6 +8,53 @@ import { CustomButton } from '../../components/CustomButton/CustomButton'
 import { InputLabel } from '../../components/InputLabel/InputLabel'
 
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    paddingHorizontal: 40,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width: '70%',
+    height: '35%',
+    justifyContent: 'center'
+  },
+  button: {
+    borderRadius: 10,
+    paddingHorizontal: 40,
+    paddingVertical: 10,
+    elevation: 2,
+    marginTop: 10
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3'
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  textTitle: {
+    fontSize: 20
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 16
+  },
   input: {
     backgroundColor: 'white',
     marginTop: 10,
@@ -16,8 +63,21 @@ const styles = StyleSheet.create({
 })
 
 export const AdministratorPage = () => {
+  const [modalVisible, setModalVisible] = useState(false)
+  const [modalData, setModalData] = useState({
+    title: '',
+    text: ''
+  })
   const { users, isUsersLoading } = useGetAllUsersHook()
-  const { requestNewDoor, newDoorRequest, setNewDoorRequest } = useRequestNewDoorHook()
+  const {
+    requestNewDoor,
+    newDoorRequest,
+    setNewDoorRequest,
+    isDoorRequestLoading,
+    isDoorRequestSuccess,
+    isDoorRequestError,
+    error
+  } = useRequestNewDoorHook()
 
   useEffect(() => {
     if (users) {
@@ -29,13 +89,47 @@ export const AdministratorPage = () => {
   }, [users])
 
   useEffect(() => {
-    if (newDoorRequest) {
-      console.log(newDoorRequest)
+    if (isDoorRequestSuccess) {
+      setModalData({
+        title: 'Sucesso!',
+        text: 'Aguarde a abertura automática da porta'
+      })
+      openModalhandler()
     }
-  }, [newDoorRequest])
+  }, [isDoorRequestSuccess])
 
-  if (isUsersLoading) {
-    return <Text>LOADING</Text>
+  useEffect(() => {
+    if (isDoorRequestError) {
+      if (error.message === '412') {
+        setModalData({
+          title: 'Erro!',
+          text: 'Não há portas disponíveis com o tamanho solicitado'
+        })
+      } else {
+        setModalData({
+          title: 'Erro!',
+          text: 'Houve um erro na requisição da porta'
+        })
+      }
+
+      openModalhandler()
+    }
+  }, [isDoorRequestError])
+
+  const openModalhandler = () => {
+    setModalVisible(true)
+  }
+
+  const closenModalhandler = () => {
+    setModalVisible(false)
+  }
+
+  if (isUsersLoading || isDoorRequestLoading) {
+    return (
+      <BaseView>
+        <ActivityIndicator color='#005BEA' size={100} style={{ width: '100%', height: '100%' }} />
+      </BaseView>
+    )
   }
 
   return (
@@ -76,6 +170,27 @@ export const AdministratorPage = () => {
           onPress={requestNewDoor}
           style={{ width: '50%', marginLeft: 'auto', marginRight: 'auto' }}
         />
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => { closenModalhandler() }}
+        >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={[styles.modalText, styles.textTitle]}>{modalData.title}</Text>
+            <Text style={styles.modalText}>{modalData.text}</Text>
+            {/* <Text style={styles.modalText}>automática da porta</Text> */}
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => { closenModalhandler() }}
+            >
+              <Text style={styles.textStyle}>Fechar</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       </View>
     </BaseView>
   )

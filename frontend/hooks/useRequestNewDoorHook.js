@@ -12,7 +12,8 @@ export const useRequestNewDoorHook = () => {
     mutate: requestNewDoor,
     isSuccess: isDoorRequestSuccess,
     isLoading: isDoorRequestLoading,
-    isError: isDoorRequestError
+    isError: isDoorRequestError,
+    error
   } = useMutation(smartboxApi.requireDoor(newDoorRequest))
 
   return {
@@ -21,6 +22,7 @@ export const useRequestNewDoorHook = () => {
     isDoorRequestError,
     requestNewDoor,
     setNewDoorRequest,
-    newDoorRequest
+    newDoorRequest,
+    error
   }
 }

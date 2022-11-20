@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { useGetAllUsersHook } from '../../hooks/useGetAllUsersHook'
+import { useRequestNewDoorHook } from '../../hooks/useRequestNewDoorHook'
 import { BaseView } from '../../components/BaseView/BaseView'
 import { CustomButton } from '../../components/CustomButton/CustomButton'
 import { InputLabel } from '../../components/InputLabel/InputLabel'
@@ -16,10 +17,22 @@ const styles = StyleSheet.create({
 
 export const AdministratorPage = () => {
   const { users, isUsersLoading } = useGetAllUsersHook()
-  const [doorRequestDto, setDoorRequestDto] = useState({
-    userId: 0,
-    doorSize: ''
-  })
+  const { requestNewDoor, newDoorRequest, setNewDoorRequest } = useRequestNewDoorHook()
+
+  useEffect(() => {
+    if (users) {
+      setNewDoorRequest((prev) => ({
+        ...prev,
+        userId: users[0].userId
+      }))
+    }
+  }, [users])
+
+  useEffect(() => {
+    if (newDoorRequest) {
+      console.log(newDoorRequest)
+    }
+  }, [newDoorRequest])
 
   if (isUsersLoading) {
     return <Text>LOADING</Text>
@@ -31,9 +44,9 @@ export const AdministratorPage = () => {
         <InputLabel>Usuário</InputLabel>
         <Picker
           style={{ ...styles.input, marginBottom: 20 }}
-          selectedValue={doorRequestDto.userId}
+          selectedValue={newDoorRequest.userId}
           onValueChange={(itemValue) =>
-            setDoorRequestDto((prev) => ({
+            setNewDoorRequest((prev) => ({
               ...prev,
               userId: itemValue
             }))
@@ -43,23 +56,24 @@ export const AdministratorPage = () => {
           })}
         </Picker>
 
-        <InputLabel>Tamanho da porta</InputLabel>
+        <InputLabel>Tamanho do armário</InputLabel>
         <Picker
           style={{ ...styles.input, marginBottom: 20 }}
-          selectedValue={doorRequestDto.doorSize}
-          onValueChange={(itemValue) =>
-            setDoorRequestDto((prev) => ({
+          selectedValue={newDoorRequest.size}
+          onValueChange={(itemValue) => {
+            setNewDoorRequest((prev) => ({
               ...prev,
-              doorSize: itemValue
+              size: itemValue
             }))
+          }
           }>
           <Picker.Item label="Grande" value="GRANDE" />
-          <Picker.Item label="Pequena" value="PEQUENA" />
+          <Picker.Item label="Pequeno" value="PEQUENO" />
         </Picker>
 
         <CustomButton
           title="Salvar"
-          onPress={() => {}}
+          onPress={requestNewDoor}
           style={{ width: '50%', marginLeft: 'auto', marginRight: 'auto' }}
         />
       </View>

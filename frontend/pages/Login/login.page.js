@@ -1,6 +1,8 @@
 import React from 'react'
+import { BaseView } from '../../components/BaseView/BaseView'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View, TextInput, Button } from 'react-native'
+import { CustomButton } from '../../components/CustomButton/CustomButton'
 
 const Separator = () => (
   <View style={styles.separator} />
@@ -11,53 +13,46 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     height: 40,
     borderColor: 'gray',
-    borderWidth: 1
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
-    textAlign: 'center',
-    marginVertical: 8
-  },
-  fixToText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    borderWidth: 1,
+    backgroundColor: 'white',
+    width: '70%',
+    fontSize: 20
   },
   separator: {
-    marginVertical: 8,
+    marginVertical: 10,
     borderBottomColor: '#737373',
     borderBottomWidth: StyleSheet.hairlineWidth
+  },
+  button: {
+    width: '50%'
   }
 })
 
-export default function LoginPage ({ navigation }) {
+export default function LoginPage () {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <StatusBar/>
-      <TextInput
-          style={styles.input}
-          placeholder='Login'
-      />
-      <TextInput
-          style={styles.input}
-          placeholder='Senha'
-      />
-      <Separator />
-      <Button
-          title="Login"
-          onPress={() => navigation.navigate('Homepage', { name: 'lol' })}
-      />
-      <Button
-          title="Registrar-se"
-          onPress={() =>
-            navigation.navigate('RegisterPage', { name: 'Jane' })
-          }
-      />
-  </View>
+    <BaseView>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <StatusBar/>
+        <TextInput
+            style={styles.input}
+            placeholder='Login'
+        />
+
+        <Separator />
+
+        <TextInput
+            style={styles.input}
+            placeholder='Senha'
+        />
+
+        <Separator />
+
+        <CustomButton
+            style={styles.button}
+            title="Login"
+            onPress={() => {}}
+        />
+    </View>
+    </BaseView>
   )
 }
-

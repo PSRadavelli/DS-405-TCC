@@ -26,5 +26,9 @@ export const smartboxApi = {
   requireDoor: (doorRequestDto) => request('doors/new-door', {
     method: 'POST',
     body: JSON.stringify(doorRequestDto)
+  }),
+  login: (loginDto) => request('users/login', {
+    method: 'POST',
+    body: JSON.stringify(loginDto)
   })
 }

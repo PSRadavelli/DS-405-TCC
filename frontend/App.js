@@ -16,15 +16,15 @@ export default function App () {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
-            name="AdministratorPage"
-            component={AdministratorPage}
-            options={{ title: 'Requisitar nova porta' }}
-            />
-
-            <Stack.Screen
             name="LoginPage"
             component={LoginPage}
             options={{ title: 'SmarBox' }}
+            />
+
+            <Stack.Screen
+            name="AdministratorPage"
+            component={AdministratorPage}
+            options={{ title: 'Requisitar nova porta' }}
             />
 
             <Stack.Screen

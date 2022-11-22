@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Text, ActivityIndicator, Modal, Pressable } from 'react-native'
+import { StyleSheet, View, ActivityIndicator } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { useGetAllUsersHook } from '../../hooks/useGetAllUsersHook'
 import { useRequestNewDoorHook } from '../../hooks/useRequestNewDoorHook'
 import { BaseView } from '../../components/BaseView/BaseView'
 import { CustomButton } from '../../components/CustomButton/CustomButton'
 import { InputLabel } from '../../components/InputLabel/InputLabel'
+import { BaseModal } from '../../components/BaseModal/BaseModal'
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -171,26 +172,12 @@ export const AdministratorPage = () => {
           style={{ width: '50%', marginLeft: 'auto', marginRight: 'auto' }}
         />
 
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => { closenModalhandler() }}
-        >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={[styles.modalText, styles.textTitle]}>{modalData.title}</Text>
-            <Text style={styles.modalText}>{modalData.text}</Text>
-            {/* <Text style={styles.modalText}>automática da porta</Text> */}
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => { closenModalhandler() }}
-            >
-              <Text style={styles.textStyle}>Fechar</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+        <BaseModal 
+          title={modalData.title}
+          text={modalData.text}
+          isModalVisible={modalVisible}
+          closeModal={closenModalhandler}
+        />
       </View>
     </BaseView>
   )

@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User { 
+export class User {
   @PrimaryGeneratedColumn({ type: 'int' })
   userId: number;
 
@@ -15,7 +15,7 @@ export class User {
   age: number;
 
   @Column({ type: 'varchar', length: 11 })
-  telephone: number;
+  telephone: string;
 
   @Column({ type: 'varchar', length: 50 })
   email: string;
@@ -25,6 +25,9 @@ export class User {
 
   @Column({ type: 'varchar', default: false, nullable: false, unique: true })
   tagId: string;
+
+  @Column({ type: 'varchar', default: false, nullable: false })
+  password: string;
 
   @Column({ nullable: false })
   appNotification: boolean;

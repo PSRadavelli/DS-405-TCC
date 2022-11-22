@@ -1,15 +1,18 @@
+import { LoginResponse } from './../models/models';
 import {
+  ForbiddenException,
   Inject,
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Door } from 'src/doors/doors.entity';
-import { TagRequestAnswer } from 'src/models/models';
+import { LoginDto, TagRequestAnswer } from 'src/models/models';
 import { Package } from 'src/packages/packages.entity';
-import { Repository, EntityManager } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from './users.entity';
 import { UserModel } from './users.interface';
+import jwt from 'jsonwebtoken';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +22,7 @@ export class UsersService {
 
     @Inject('PACKAGES_REPOSITORY')
     private packagesRepository: Repository<Package>,
-    
+
     @Inject('DOORS_REPOSITORY')
     private doorsRepository: Repository<Door>,
   ) {}
@@ -41,10 +44,10 @@ export class UsersService {
   public async findOneByTag(tagId: string): Promise<TagRequestAnswer> {
     const user = await this.usersRepository
       .createQueryBuilder('user')
-      .where("user.tagId = :id", { id: tagId })
+      .where('user.tagId = :id', { id: tagId })
       .printSql()
       .getOne();
-      
+
     if (!user) {
       throw new NotFoundException('User tag not found.');
     }
@@ -58,17 +61,21 @@ export class UsersService {
     const packages = await this.packagesRepository
       .createQueryBuilder('package')
       .where('package.userId = :userId', { userId: user.userId })
-      .andWhere('package.retrieved = :retrievedStatus', {retrievedStatus: false})
+      .andWhere('package.retrieved = :retrievedStatus', {
+        retrievedStatus: false,
+      })
       .printSql()
       .getMany();
 
     if (packages.length === 0) {
       return response;
-    };
+    }
 
     const doors = await this.doorsRepository
       .createQueryBuilder('door')
-      .where('door.packageId IN (:packageId)', { packageId: packages.map((p) => p.id) })
+      .where('door.packageId IN (:packageId)', {
+        packageId: packages.map((p) => p.id),
+      })
       .printSql()
       .getMany();
 
@@ -132,5 +139,37 @@ export class UsersService {
     this.users[index] = userPost;
 
     return userPost;
+  }
+
+  public async login(loginDto: LoginDto): Promise<LoginResponse> {
+    const user = await this.usersRepository
+      .createQueryBuilder('user')
+      .where('user.email = :email', { email: loginDto.email })
+      .getOne();
+
+    if (user.password !== loginDto.password) {
+      throw new ForbiddenException();
+    }
+
+    const response: LoginResponse = {
+      token: jwt.sign(loginDto),
+      user: {
+        userId: user.userId,
+        name: user.name,
+        surname: user.surname,
+        age: user.age,
+        telephone: user.telephone,
+        email: user.email,
+        admin: user.admin,
+        tagId: user.tagId,
+        appNotification: user.appNotification,
+        emailNotification: user.emailNotification,
+        intercomNotification: user.intercomNotification,
+      },
+    };
+
+    console.log(response);
+
+    return response;
   }
 }

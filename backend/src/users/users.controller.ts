@@ -8,7 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { TagRequestAnswer } from 'src/models/models';
+import { LoginDto, LoginResponse, TagRequestAnswer } from 'src/models/models';
 import { UserModel } from './users.interface';
 import { UsersService } from './users.service';
 
@@ -46,5 +46,10 @@ export class UsersController {
     @Body() user: UserModel,
   ): UserModel {
     return this.usersService.update(id, user);
+  }
+
+  @Post('login')
+  public login(@Body() loginDto: LoginDto): Promise<LoginResponse> {
+    return this.usersService.login(loginDto);
   }
 }

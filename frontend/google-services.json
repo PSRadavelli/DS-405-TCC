@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "549769679741",
+    "project_id": "smartbox-17343",
+    "storage_bucket": "smartbox-17343.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549769679741:android:6446d6243d98098d967214",
+        "android_client_info": {
+          "package_name": "com.viniciusgranado.frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549769679741-aenv7diad5evkd4g7eh71v9q05idu9q8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGyDCM-rsS6RmizNhPHPE4NDFRHJPMMaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549769679741-aenv7diad5evkd4g7eh71v9q05idu9q8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

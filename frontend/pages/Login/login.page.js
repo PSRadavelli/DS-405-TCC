@@ -5,6 +5,8 @@ import { StyleSheet, View, TextInput, ActivityIndicator } from 'react-native'
 import { CustomButton } from '../../components/CustomButton/CustomButton'
 import { useLoginHook } from '../../hooks/useLoginHook'
 import { BaseModal } from '../../components/BaseModal/BaseModal'
+import { getData } from '../../util/asyncStorage'
+import { useNavigation } from '@react-navigation/native'
 
 const Separator = () => (
   <View style={styles.separator} />
@@ -30,7 +32,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function LoginPage ({ navigation }) {
+export default function LoginPage () {
+  const navigation = useNavigation()
   const {
     login,
     isLoginSuccess,
@@ -45,6 +48,18 @@ export default function LoginPage ({ navigation }) {
     title: '',
     text: ''
   })
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const user = await getData()
+
+      if (user) {
+        navigation.navigate('HomePage')
+      }
+    }
+
+    checkLogin()
+  }, [])
 
   useEffect(() => {
     if (isLoginError) {

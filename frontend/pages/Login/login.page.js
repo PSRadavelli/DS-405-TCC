@@ -30,10 +30,10 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function LoginPage () {
+export default function LoginPage ({ navigation }) {
   const {
     login,
-    loginData,
+    isLoginSuccess,
     isLoginLoading,
     isLoginError,
     error,
@@ -63,6 +63,12 @@ export default function LoginPage () {
       openModalhandler()
     }
   }, [isLoginError])
+
+  useEffect(() => {
+    if (isLoginSuccess) {
+      navigation.navigate('HomePage')
+    }
+  }, [isLoginSuccess])
 
   const openModalhandler = () => {
     setModalVisible(true)

@@ -1,7 +1,8 @@
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, ActivityIndicator } from 'react-native'
 import { BaseView } from '../../components/BaseView/BaseView'
 import { Card } from '../../components/Card/Card'
+import { getData } from '../../util/asyncStorage'
 
 const styles = StyleSheet.create({
   home: {
@@ -44,10 +45,36 @@ const commonCards = [
 ]
 
 export const HomePage = () => {
+  const [cardData, setCardData] = useState(null)
+
+  useEffect(() => {
+    const manageUserData = async () => {
+      const userData = await getData()
+
+      const userDataJson = JSON.parse(userData)
+
+      if (userDataJson.user.admin) {
+        setCardData(adminCards)
+      } else {
+        setCardData(commonCards)
+      }
+    }
+
+    manageUserData()
+  }, [])
+
+  if (!cardData) {
+    return (
+      <BaseView>
+        <ActivityIndicator color='#005BEA' size={100} style={{ width: '100%', height: '100%' }} />
+      </BaseView>
+    )
+  }
+
   return (
     <BaseView>
       <View style={styles.home}>
-        {commonCards.map((card) => (
+        {cardData.map((card) => (
           <Card title={card.title} iconName={card.iconName} key={card.title}/>
         ))}
       </View>

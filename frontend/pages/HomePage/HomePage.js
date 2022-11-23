@@ -17,7 +17,7 @@ const adminCards = [
   {
     title: 'Nova Encomenda',
     iconName: 'dropbox',
-    redirectPage: ''
+    redirectPage: 'AdministratorPage'
   },
   {
     title: 'Lista de portas',
@@ -75,7 +75,7 @@ export const HomePage = () => {
     <BaseView>
       <View style={styles.home}>
         {cardData.map((card) => (
-          <Card title={card.title} iconName={card.iconName} key={card.title}/>
+          <Card title={card.title} iconName={card.iconName} redirectPage={card.redirectPage} key={card.title}/>
         ))}
       </View>
     </BaseView>

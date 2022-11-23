@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { useNavigation } from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   card: {
@@ -15,9 +16,11 @@ const styles = StyleSheet.create({
   }
 })
 
-export const Card = ({ title, iconName, redirectPage}) => {
+export const Card = ({ title, iconName, redirectPage }) => {
+  const navigation = useNavigation()
+
   return (
-  <View style={styles.card}>
+  <View style={styles.card} onTouchEnd={() => navigation.navigate(redirectPage)}>
       <Icon name={iconName} size={20} color="#000" style={{ margin: 10 }}/>
       <Text style={{ fontSize: 12, textAlign: 'center' }}>{title}</Text>
     </View>

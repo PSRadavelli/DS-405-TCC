@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import RegisterPage from './pages/Register/register.page'
 import { AdministratorPage } from './pages/Administrator/administrator.page'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { HomePage } from './pages/HomePage/HomePage'
 
 const Stack = createNativeStackNavigator()
 
@@ -16,21 +17,27 @@ export default function App () {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
-            name="LoginPage"
-            component={LoginPage}
-            options={{ title: 'SmarBox' }}
+              name="LoginPage"
+              component={LoginPage}
+              options={{ title: 'SmartBox' }}
             />
 
             <Stack.Screen
-            name="AdministratorPage"
-            component={AdministratorPage}
-            options={{ title: 'Requisitar nova porta' }}
+              name="HomePage"
+              component={HomePage}
+              options={{ title: 'SmartBox' }}
             />
 
             <Stack.Screen
-            name="RegisterPage"
-            component={RegisterPage}
-            options={{ title: 'Registre-se' }}
+              name="AdministratorPage"
+              component={AdministratorPage}
+              options={{ title: 'Requisitar nova porta' }}
+            />
+
+            <Stack.Screen
+              name="RegisterPage"
+              component={RegisterPage}
+              options={{ title: 'Registre-se' }}
             />
           </Stack.Navigator>
         </NavigationContainer>

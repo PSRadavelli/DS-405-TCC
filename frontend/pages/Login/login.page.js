@@ -7,6 +7,7 @@ import { useLoginHook } from '../../hooks/useLoginHook'
 import { BaseModal } from '../../components/BaseModal/BaseModal'
 import { getData } from '../../util/asyncStorage'
 import { useNavigation } from '@react-navigation/native'
+import { registerIndieID } from 'native-notify'
 
 const Separator = () => (
   <View style={styles.separator} />
@@ -36,7 +37,6 @@ export default function LoginPage () {
   const navigation = useNavigation()
   const {
     login,
-    isLoginSuccess,
     isLoginLoading,
     isLoginError,
     error,
@@ -54,6 +54,9 @@ export default function LoginPage () {
       const user = await getData()
 
       if (user) {
+        const userObject = JSON.parse(user)
+
+        await registerIndieID(String(userObject.user.userId), 4976, 'cB3EX57tZ8TXuCgDiyx07U').then(console.log('Push notification ID registered'))
         navigation.navigate('HomePage')
       }
     }
@@ -78,12 +81,6 @@ export default function LoginPage () {
       openModalhandler()
     }
   }, [isLoginError])
-
-  useEffect(() => {
-    if (isLoginSuccess) {
-      navigation.navigate('HomePage')
-    }
-  }, [isLoginSuccess])
 
   const openModalhandler = () => {
     setModalVisible(true)

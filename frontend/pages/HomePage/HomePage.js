@@ -40,7 +40,7 @@ const commonCards = [
   {
     title: 'Notificações',
     iconName: 'bell',
-    redirectPage: ''
+    redirectPage: 'Logs'
   }
 ]
 

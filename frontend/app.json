@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SmartBox",
-    "slug": "SmartBox",
+    "slug": "frontend",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,7 +25,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.viniciusgranado.frontend"
+      "package": "com.viniciusgranado.frontend",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

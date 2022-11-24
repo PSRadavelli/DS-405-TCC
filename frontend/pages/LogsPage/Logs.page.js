@@ -1,80 +1,13 @@
-import React, { useState } from 'react'
-import { View, FlatList, StatusBar, Text, StyleSheet } from 'react-native'
+import React from 'react'
+import { View, FlatList, Text, StyleSheet, SafeAreaView } from 'react-native'
 import { BaseView } from '../../components/BaseView/BaseView'
-
-const DATA = [
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda encomenda chegou, e está disponível na porta 2!',
-    date: '12/12/1994'
-  },
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda foi retirada!',
-    date: '12/12/1994'
-  },
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda foi retirada!',
-    date: '12/12/1994'
-  },
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda foi retirada!',
-    date: '12/12/1994'
-  },
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda foi retirada!',
-    date: '12/12/1994'
-  },
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda foi retirada!',
-    date: '12/12/1994'
-  },
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda foi retirada!',
-    date: '12/12/1994'
-  },
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda foi retirada!',
-    date: '12/12/1994'
-  },
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda foi retirada!',
-    date: '12/12/1994'
-  },
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda foi retirada!',
-    date: '12/12/1994'
-  },
-  {
-    id: 1,
-    userId: 1,
-    text: 'Sua encomenda foi retirada!',
-    date: '12/12/1994'
-  }
-]
+import { useGetLogsByUserIdHook } from '../../hooks/useGetLogsByUserIdHook'
+import { parseDateString } from '../../util/parseDateString'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
+    paddingTop: 10,
     marginHorizontal: 16
   },
   item: {
@@ -100,22 +33,25 @@ const styles = StyleSheet.create({
 const Item = ({ text, date }) => (
   <View style={styles.item}>
     <Text style={styles.title}>{text}</Text>
-    <Text style={styles.date}>{date}</Text>
+    <Text style={styles.date}>{parseDateString(date)}</Text>
   </View>
 )
 
 export const Logs = () => {
-  const [isRefreshing, setIsRefreshing] = useState(false)
+  const { logs, isLogsLoading, refetch } = useGetLogsByUserIdHook()
+
   return (
     <BaseView>
+      <SafeAreaView style={styles.container}>
         <FlatList
           style={styles.container}
-          data={DATA}
+          data={logs}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => <Item text={item.text} date={item.date} />}
-          refreshing={isRefreshing}
-          onRefresh={() => setIsRefreshing(true)}
+          refreshing={isLogsLoading}
+          onRefresh={refetch}
         />
+      </SafeAreaView>
     </BaseView>
   )
 }

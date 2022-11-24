@@ -30,5 +30,6 @@ export const smartboxApi = {
   login: (loginDto) => request('users/login', {
     method: 'POST',
     body: JSON.stringify(loginDto)
-  })
+  }),
+  getLogsByUserId: (userId) => request(`logs/${userId}`)
 }

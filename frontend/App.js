@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { HomePage } from './pages/HomePage/HomePage'
 import registerNNPushToken from 'native-notify'
 import { Logs } from './pages/LogsPage/Logs.page'
+import { NewUser } from './pages/NewUser/NewUser'
 
 const Stack = createNativeStackNavigator()
 
@@ -42,6 +43,12 @@ export default function App () {
               name="Logs"
               component={Logs}
               options={{ title: 'Notificações' }}
+            />
+
+            <Stack.Screen
+              name="NewUser"
+              component={NewUser}
+              options={{ title: 'Cadastrar novo usuário' }}
             />
 
             <Stack.Screen

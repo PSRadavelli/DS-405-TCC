@@ -27,7 +27,7 @@ const adminCards = [
   {
     title: 'Cadastro de Usuário',
     iconName: 'user-plus',
-    redirectPage: ''
+    redirectPage: 'NewUser'
   }
 ]
 

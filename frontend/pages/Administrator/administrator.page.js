@@ -172,7 +172,7 @@ export const AdministratorPage = () => {
           style={{ width: '50%', marginLeft: 'auto', marginRight: 'auto' }}
         />
 
-        <BaseModal 
+        <BaseModal
           title={modalData.title}
           text={modalData.text}
           isModalVisible={modalVisible}

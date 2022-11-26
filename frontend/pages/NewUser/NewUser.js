@@ -267,7 +267,6 @@ export const NewUser = () => {
               style={styles.button}
               title="Salvar"
               onPress={registerNewUser}
-              // onPress={() => console.log(newUserDto)}
           />
 
           <BaseModal

@@ -22,7 +22,7 @@ const adminCards = [
   {
     title: 'Lista de portas',
     iconName: 'list',
-    redirectPage: ''
+    redirectPage: 'DoorsList'
   },
   {
     title: 'Cadastro de Usuário',

@@ -9,6 +9,7 @@ import { HomePage } from './pages/HomePage/HomePage'
 import registerNNPushToken from 'native-notify'
 import { Logs } from './pages/LogsPage/Logs.page'
 import { NewUser } from './pages/NewUser/NewUser'
+import { DoorsList } from './pages/DoorsList/DoorsList'
 
 const Stack = createNativeStackNavigator()
 
@@ -49,6 +50,12 @@ export default function App () {
               name="NewUser"
               component={NewUser}
               options={{ title: 'Cadastrar novo usuário' }}
+            />
+
+            <Stack.Screen
+              name="DoorsList"
+              component={DoorsList}
+              options={{ title: 'Lista de portas' }}
             />
 
             <Stack.Screen

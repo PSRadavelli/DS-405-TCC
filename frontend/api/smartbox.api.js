@@ -23,6 +23,7 @@ const request = (
 
 export const smartboxApi = {
   getAllUsers: request('users'),
+  getAllDoors: request('doors'),
   newUser: (newUserDto) => request('users', {
     method: 'POST',
     body: JSON.stringify(newUserDto)

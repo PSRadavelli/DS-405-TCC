@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/doors/doors.module.ts"],
+  "sourcesContent": ["import { Module } from '@nestjs/common';\nimport { DoorsService } from './doors.service';\nimport { DoorController } from './doors.controller';\n\n@Module({\n  providers: [DoorsService],\n  controllers: [DoorController],\n  exports: [DoorsService],\n})\nexport class DoorModule {}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA,oBAAuB;AACvB,mBAA6B;AAC7B,oBAA+B;AAOxB,uBAAiB;AAAA;AAAjB;AAAA,EALN,0BAAO;AAAA,IACN,WAAW,CAAC;AAAA,IACZ,aAAa,CAAC;AAAA,IACd,SAAS,CAAC;AAAA;AAAA,GAEL;",
+  "names": []
+}

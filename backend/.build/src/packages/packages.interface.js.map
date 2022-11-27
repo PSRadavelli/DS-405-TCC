@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/packages/packages.interface.ts"],
+  "sourcesContent": ["export interface PackagesModel {\n  id: number;\n  userId: number;\n  status: string;\n  receivementDate: string;\n  retrievalDate: string;\n}\n"],
+  "mappings": ";;AAAA;",
+  "names": []
+}

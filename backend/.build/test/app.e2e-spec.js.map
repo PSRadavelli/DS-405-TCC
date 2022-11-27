@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../test/app.e2e-spec.ts"],
+  "sourcesContent": ["import { Test, TestingModule } from '@nestjs/testing';\nimport { INestApplication } from '@nestjs/common';\nimport * as request from 'supertest';\nimport { AppModule } from './../src/app.module';\n\ndescribe('AppController (e2e)', () => {\n  let app: INestApplication;\n\n  beforeEach(async () => {\n    const moduleFixture: TestingModule = await Test.createTestingModule({\n      imports: [AppModule],\n    }).compile();\n\n    app = moduleFixture.createNestApplication();\n    await app.init();\n  });\n\n  it('/ (GET)', () => {\n    return request(app.getHttpServer())\n      .get('/')\n      .expect(200)\n      .expect('Hello World!');\n  });\n});\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA,qBAAoC;AAEpC,cAAyB;AACzB,iBAA0B;AAE1B,SAAS,uBAAuB,MAAM;AACpC,MAAI;AAEJ,aAAW,YAAY;AACrB,UAAM,gBAA+B,MAAM,oBAAK,oBAAoB;AAAA,MAClE,SAAS,CAAC;AAAA,OACT;AAEH,UAAM,cAAc;AACpB,UAAM,IAAI;AAAA;AAGZ,KAAG,WAAW,MAAM;AAClB,WAAO,QAAQ,IAAI,iBAChB,IAAI,KACJ,OAAO,KACP,OAAO;AAAA;AAAA;",
+  "names": []
+}

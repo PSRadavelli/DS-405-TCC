@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/app.module.ts"],
+  "sourcesContent": ["import { Module } from '@nestjs/common';\nimport { AppController } from './app.controller';\nimport { AppService } from './app.service';\nimport { TypeOrmModule } from '@nestjs/typeorm';\nimport { join } from 'path';\nimport { DoorModule } from './doors/doors.module';\nimport { UsersModule } from './users/users.module';\nimport { PackagesModule } from './packages/packages.module';\n@Module({\n  imports: [\n    TypeOrmModule.forRoot({\n      type: 'mysql',\n      host: 'bupi2skdqak3hefpxtow-mysql.services.clever-cloud.com',\n      port: 3306,\n      username: 'uhid1kcv2z4ajrvx',\n      password: 'Tw8D3gUuZu8fTZZflUfU',\n      database: 'bupi2skdqak3hefpxtow',\n      entities: [join(__dirname, '**', '*.entity.{ts,js}')],\n      synchronize: true,\n    }),\n    DoorModule,\n    UsersModule,\n    PackagesModule,\n  ],\n  controllers: [AppController],\n  providers: [AppService],\n})\nexport class AppModule {}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA,oBAAuB;AACvB,iBAA8B;AAC9B,kBAA2B;AAC3B,qBAA8B;AAC9B,kBAAqB;AACrB,mBAA2B;AAC3B,mBAA4B;AAC5B,sBAA+B;AAoBxB,sBAAgB;AAAA;AAAhB;AAAA,EAnBN,0BAAO;AAAA,IACN,SAAS;AAAA,MACP,6BAAc,QAAQ;AAAA,QACpB,MAAM;AAAA,QACN,MAAM;AAAA,QACN,MAAM;AAAA,QACN,UAAU;AAAA,QACV,UAAU;AAAA,QACV,UAAU;AAAA,QACV,UAAU,CAAC,sBAAK,WAAW,MAAM;AAAA,QACjC,aAAa;AAAA;AAAA,MAEf;AAAA,MACA;AAAA,MACA;AAAA;AAAA,IAEF,aAAa,CAAC;AAAA,IACd,WAAW,CAAC;AAAA;AAAA,GAEP;",
+  "names": []
+}

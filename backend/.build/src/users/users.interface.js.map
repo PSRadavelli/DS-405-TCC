@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/users/users.interface.ts"],
+  "sourcesContent": ["export interface UserModel {\n  userId: number;\n  name: string;\n  surname?: string;\n  age: number;\n  telephone?: string;\n  admin: boolean;\n  appNotification: boolean;\n  emailNotification: boolean;\n  intercomNotification: boolean;\n}\n"],
+  "mappings": ";;AAAA;",
+  "names": []
+}

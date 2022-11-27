@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/main.ts"],
+  "sourcesContent": ["import { NestFactory } from '@nestjs/core';\nimport { AppModule } from './app.module';\n\nasync function bootstrap() {\n  const app = await NestFactory.create(AppModule);\n  await app.listen(3000);\n}\nbootstrap();\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA,kBAA4B;AAC5B,iBAA0B;AAE1B,2BAA2B;AACzB,QAAM,MAAM,MAAM,wBAAY,OAAO;AACrC,QAAM,IAAI,OAAO;AAAA;AAEnB;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/packages/packages.entity.ts"],
+  "sourcesContent": ["import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';\n\n@Entity()\nexport class Package {\n  @PrimaryGeneratedColumn({ type: 'int' })\n  id: number;\n\n  @Column({ type: 'int', nullable: false })\n  userId: number;\n\n  @Column({ type: 'varchar', length: 10 })\n  status: string;\n\n  @Column({ type: 'date', nullable: false })\n  receivementDate: string;\n\n  @Column({ type: 'date', nullable: false })\n  takeOffDate: string;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA,qBAAuD;AAGhD,oBAAc;AAAA;AAEnB;AAAA,EADC,2CAAuB,EAAE,MAAM;AAAA,GAChC,AAFK,QAEL;AAGA;AAAA,EADC,2BAAO,EAAE,MAAM,OAAO,UAAU;AAAA,GACjC,AALK,QAKL;AAGA;AAAA,EADC,2BAAO,EAAE,MAAM,WAAW,QAAQ;AAAA,GACnC,AARK,QAQL;AAGA;AAAA,EADC,2BAAO,EAAE,MAAM,QAAQ,UAAU;AAAA,GAClC,AAXK,QAWL;AAGA;AAAA,EADC,2BAAO,EAAE,MAAM,QAAQ,UAAU;AAAA,GAClC,AAdK,QAcL;AAdK;AAAA,EADN;AAAA,GACM;",
+  "names": []
+}

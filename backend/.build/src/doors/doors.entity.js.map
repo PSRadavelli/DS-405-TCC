@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/doors/doors.entity.ts"],
+  "sourcesContent": ["import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';\n\n@Entity()\nexport class Door {\n  @PrimaryGeneratedColumn()\n  @Column({ type: 'int', nullable: false, unique: true, primary: true })\n  packageNumber: number;\n\n  @Column({ type: 'int', unique: true, nullable: false })\n  packageId: number;\n\n  @Column({ type: 'varchar', nullable: false })\n  size: number;\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA,qBAAuD;AAGhD,iBAAW;AAAA;AAGhB;AAAA,EAFC;AAAA,EACA,2BAAO,EAAE,MAAM,OAAO,UAAU,OAAO,QAAQ,MAAM,SAAS;AAAA,GAC/D,AAHK,KAGL;AAGA;AAAA,EADC,2BAAO,EAAE,MAAM,OAAO,QAAQ,MAAM,UAAU;AAAA,GAC/C,AANK,KAML;AAGA;AAAA,EADC,2BAAO,EAAE,MAAM,WAAW,UAAU;AAAA,GACrC,AATK,KASL;AATK;AAAA,EADN;AAAA,GACM;",
+  "names": []
+}

@@ -8,7 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { LoginDto, LoginResponse, TagRequestAnswer } from 'src/models/models';
+import { LoginDto, LoginResponse, TagRequestAnswer } from '../models/models';
 import { UserModel } from './users.interface';
 import { UsersService } from './users.service';
 
@@ -17,12 +17,12 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  public findAll(): Array<UserModel> {
+  public findAll(): Promise<Array<UserModel>> {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  public findOne(@Param('id', ParseIntPipe) id: number): UserModel {
+  public findOne(@Param('id', ParseIntPipe) id: number): Promise<UserModel> {
     return this.usersService.findOne(id);
   }
 
@@ -32,7 +32,7 @@ export class UsersController {
   }
 
   @Post()
-  public create(@Body() user: UserModel): UserModel {
+  public create(@Body() user: UserModel): Promise<Number> {
     return this.usersService.create(user);
   }
 

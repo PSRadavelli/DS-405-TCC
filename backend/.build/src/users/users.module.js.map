@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/users/users.module.ts"],
+  "sourcesContent": ["import { Module } from '@nestjs/common';\nimport { UsersService } from './users.service';\nimport { UsersController } from './users.controller';\n\n@Module({\n  providers: [UsersService],\n  controllers: [UsersController],\n  exports: [UsersService],\n})\nexport class UsersModule {}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA,oBAAuB;AACvB,mBAA6B;AAC7B,oBAAgC;AAOzB,wBAAkB;AAAA;AAAlB;AAAA,EALN,0BAAO;AAAA,IACN,WAAW,CAAC;AAAA,IACZ,aAAa,CAAC;AAAA,IACd,SAAS,CAAC;AAAA;AAAA,GAEL;",
+  "names": []
+}

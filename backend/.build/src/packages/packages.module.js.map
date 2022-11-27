@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/packages/packages.module.ts"],
+  "sourcesContent": ["import { Module } from '@nestjs/common';\nimport { PackagesService } from './packages.service';\nimport { PackagesController } from './packages.controller';\n\n@Module({\n  providers: [PackagesService],\n  controllers: [PackagesController],\n  exports: [PackagesService],\n})\nexport class PackagesModule {}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA,oBAAuB;AACvB,sBAAgC;AAChC,uBAAmC;AAO5B,2BAAqB;AAAA;AAArB;AAAA,EALN,0BAAO;AAAA,IACN,WAAW,CAAC;AAAA,IACZ,aAAa,CAAC;AAAA,IACd,SAAS,CAAC;AAAA;AAAA,GAEL;",
+  "names": []
+}

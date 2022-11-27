@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/doors/doors.interface.ts"],
+  "sourcesContent": ["export interface DoorModel {\n  id: number;\n  packageId: number;\n  size: string;\n  doorNumber: number;\n}\n"],
+  "mappings": ";;AAAA;",
+  "names": []
+}

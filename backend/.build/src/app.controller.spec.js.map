@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/app.controller.spec.ts"],
+  "sourcesContent": ["import { Test, TestingModule } from '@nestjs/testing';\nimport { AppController } from './app.controller';\nimport { AppService } from './app.service';\n\ndescribe('AppController', () => {\n  let appController: AppController;\n\n  beforeEach(async () => {\n    const app: TestingModule = await Test.createTestingModule({\n      controllers: [AppController],\n      providers: [AppService],\n    }).compile();\n\n    appController = app.get<AppController>(AppController);\n  });\n\n  describe('root', () => {\n    it('should return \"Hello World!\"', () => {\n      expect(appController.getHello()).toBe('Hello World!');\n    });\n  });\n});\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA,qBAAoC;AACpC,iBAA8B;AAC9B,kBAA2B;AAE3B,SAAS,iBAAiB,MAAM;AAC9B,MAAI;AAEJ,aAAW,YAAY;AACrB,UAAM,MAAqB,MAAM,oBAAK,oBAAoB;AAAA,MACxD,aAAa,CAAC;AAAA,MACd,WAAW,CAAC;AAAA,OACX;AAEH,oBAAgB,IAAI,IAAmB;AAAA;AAGzC,WAAS,QAAQ,MAAM;AACrB,OAAG,gCAAgC,MAAM;AACvC,aAAO,cAAc,YAAY,KAAK;AAAA;AAAA;AAAA;",
+  "names": []
+}

@@ -35,7 +35,7 @@ const commonCards = [
   {
     title: 'Minhas Encomendas',
     iconName: 'dropbox',
-    redirectPage: ''
+    redirectPage: 'MyPackages'
   },
   {
     title: 'Notificações',

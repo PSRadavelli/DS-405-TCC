@@ -2,7 +2,6 @@ import React from 'react'
 import LoginPage from './pages/Login/login.page'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import RegisterPage from './pages/Register/register.page'
 import { AdministratorPage } from './pages/Administrator/administrator.page'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { HomePage } from './pages/HomePage/HomePage'
@@ -10,6 +9,7 @@ import registerNNPushToken from 'native-notify'
 import { Logs } from './pages/LogsPage/Logs.page'
 import { NewUser } from './pages/NewUser/NewUser'
 import { DoorsList } from './pages/DoorsList/DoorsList'
+import { MyPackages } from './pages/MyPackages/MyPackages'
 
 const Stack = createNativeStackNavigator()
 
@@ -59,9 +59,9 @@ export default function App () {
             />
 
             <Stack.Screen
-              name="RegisterPage"
-              component={RegisterPage}
-              options={{ title: 'Registre-se' }}
+              name="MyPackages"
+              component={MyPackages}
+              options={{ title: 'Minhas encomendas' }}
             />
           </Stack.Navigator>
         </NavigationContainer>

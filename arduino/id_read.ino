@@ -207,10 +207,9 @@ void checaRequisicaoPorta()
 
 void abrePortas(int portas[])
 {
-  int arrayLength = getIntArrayLength(portas);
-  int doorsPorts[arrayLength];
+  int doorsPorts[doorsArrayLength];
 
-  for (int i = 0; i < arrayLength; i++)
+  for (int i = 0; i < doorsArrayLength; i++)
   {
     int doorId = portas[i];
 
@@ -220,9 +219,9 @@ void abrePortas(int portas[])
       openDoor(doorsPorts[i]);
   }
 
-  delay(3000);
+  delay(10000);
 
-  for (int i = 0; i < arrayLength; i++)
+  for (int i = 0; i < doorsArrayLength; i++)
   {
     if (doorsPorts[i] != -1)
     {
@@ -252,9 +251,4 @@ int getDoorPortById(int doorId)
   }
 
   return -1;
-}
-
-int getIntArrayLength(int arr[])
-{
-  return sizeof(arr) / sizeof(int);
 }

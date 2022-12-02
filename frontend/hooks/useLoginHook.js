@@ -13,9 +13,9 @@ export const useLoginHook = () => {
   })
 
   const onSuccessCallback = async (value) => {
-    navigation.navigate('HomePage')
     await registerIndieID(String(value.user.userId), 4976, 'cB3EX57tZ8TXuCgDiyx07U').then(console.log('Push notification ID registered'))
     await storeData(JSON.stringify(value))
+    navigation.navigate('HomePage')
   }
 
   const { mutate: login, data: loginData, isLoading: isLoginLoading, isSuccess: isLoginSuccess, isError: isLoginError, error } = useMutation(
